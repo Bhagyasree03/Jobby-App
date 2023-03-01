@@ -35,7 +35,7 @@ class Profile extends Component {
     const response = await fetch(url, options)
     if (response.ok === true) {
       const data = await response.json()
-      console.log(data)
+      //   console.log(data)
       this.setState({
         name: data.profile_details.name,
         image: data.profile_details.profile_image_url,

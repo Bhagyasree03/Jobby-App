@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 import './index.css'
 
 const Header = () => (
@@ -8,8 +9,12 @@ const Header = () => (
       className="header-logo"
     />
     <ul className="header-list">
-      <li className="header-text">Home</li>
-      <li className="header-text">Jobs</li>
+      <Link to="/" className="header-link">
+        <li className="header-text">Home</li>
+      </Link>
+      <Link to="/jobs" className="header-link">
+        <li className="header-text">Jobs</li>
+      </Link>
     </ul>
     <button type="button" className="header-btn">
       Logout

@@ -1,0 +1,15 @@
+.jobs-list-container {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding-left: 0;
+}
+.job-list-items {
+  margin-bottom: 20px;
+}
+.job-card-container {
+  background-color: #272727;
+  height: 150px;
+  width: 80%;
+}

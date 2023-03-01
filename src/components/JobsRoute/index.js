@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import Header from '../Header'
 import Profile from '../Profile'
+import JobsList from '../JobsList'
 import './index.css'
 
 const employmentTypesList = [
@@ -49,6 +50,7 @@ class JobsRoute extends Component {
         <div className="jobs-container">
           <div className="side-container">
             <Profile />
+
             <hr className="horizontal-line" />
             <div>
               <h1 className="side-text">Type of Employment</h1>
@@ -72,6 +74,7 @@ class JobsRoute extends Component {
               </ul>
             </div>
           </div>
+          <JobsList />
         </div>
       </>
     )
