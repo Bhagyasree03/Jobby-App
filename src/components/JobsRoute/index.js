@@ -57,7 +57,17 @@ class JobsRoute extends Component {
               <ul className="side-subtext">
                 {employmentTypesList.map(each => (
                   <li className="list-text" key={each.employmentTypeId}>
-                    {each.label}
+                    <input
+                      type="checkbox"
+                      id={each.employmentTypeId}
+                      value={each.employmentTypeId}
+                    />
+                    <label
+                      htmlFor={each.employmentTypeId}
+                      className="label-text"
+                    >
+                      {each.label}
+                    </label>
                   </li>
                 ))}
               </ul>
@@ -68,7 +78,15 @@ class JobsRoute extends Component {
               <ul className="side-subtext">
                 {salaryRangesList.map(each => (
                   <li className="list-text" key={each.salaryRangeId}>
-                    {each.label}
+                    <input
+                      type="radio"
+                      id={each.salaryRangeId}
+                      value={each.salaryRangeId}
+                      name="bhagi"
+                    />
+                    <label htmlFor={each.salaryRangeId} className="label-text">
+                      {each.label}
+                    </label>
                   </li>
                 ))}
               </ul>

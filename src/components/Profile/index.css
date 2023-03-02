@@ -8,7 +8,7 @@
 }
 .profile-name {
   font-family: 'Roboto';
-  font-size: 25px;
+  font-size: 20px;
   color: #6163ee;
   font-weight: 500;
   margin: 0;
@@ -26,7 +26,7 @@
 .failure-button {
   background-color: #4d41e2;
   border-radius: 9px;
-  padding: 20px 40px;
+  padding: 12px 24px;
   color: white;
 }
 .profile-failure-card {
@@ -35,6 +35,9 @@
   width: 90%;
   border-radius: 20px;
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .loader-card {
   background-color: transparent;

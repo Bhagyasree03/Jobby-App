@@ -4,12 +4,132 @@
   flex-direction: column;
   list-style-type: none;
   padding-left: 0;
+  width: 100%;
+  margin: 0;
 }
 .job-list-items {
   margin-bottom: 20px;
 }
 .job-card-container {
   background-color: #272727;
-  height: 150px;
-  width: 80%;
+  border-radius: 9px;
+  padding: 20px;
+}
+.company-logo {
+  height: 70px;
+  width: 70px;
+  margin-right: 10px;
+}
+.jobs-logo-container {
+  display: flex;
+  align-items: space-between;
+}
+.title-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+}
+.title {
+  font-size: 18px;
+  font-family: 'Roboto';
+  color: #fff;
+  margin: 0;
+}
+.rating {
+  font-size: 16px;
+  font-family: 'Roboto';
+  color: #fff;
+}
+.location-container {
+  display: flex;
+
+  justify-content: space-between;
+}
+.location-text {
+  font-size: 14px;
+  font-family: 'Roboto';
+  color: #fff;
+  margin-right: 10px;
+}
+.employment-type-text {
+  font-size: 14px;
+  font-family: 'Roboto';
+  color: #fff;
+  margin-right: 10px;
+}
+.package-text {
+  font-size: 14px;
+  font-family: 'Roboto';
+  color: #fff;
+}
+
+.description-text {
+  font-size: 18px;
+  font-family: 'Roboto';
+  color: #fff;
+}
+.jobDescription {
+  font-size: 14px;
+  font-family: 'Roboto';
+  color: #fff;
+  margin-bottom: 3px;
+}
+.star-color {
+  color: #fcc035;
+  margin-right: 10px;
+}
+.icon-color {
+  color: #fff;
+  margin-right: 10px;
+}
+.rating-container {
+  display: flex;
+  align-items: center;
+}
+.part-container {
+  display: flex;
+  align-items: center;
+}
+.line {
+  width: 100%;
+}
+.failure-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.failure-heading {
+  font-size: 30px;
+  font-family: 'Roboto';
+  color: #fff;
+}
+.failure-text {
+  font-size: 12px;
+  font-family: 'Roboto';
+  color: #fff;
+  margin-top: 0;
+}
+.failure-jobs-btn {
+  background-color: #4d41e2;
+  border-radius: 9px;
+  padding: 12px 24px;
+  color: white;
+}
+.failure-image {
+  height: 60%;
+}
+.jobs-loader-card {
+  background-color: transparent;
+  height: 100vh;
+  width: 100%;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.label-text {
+  margin-left: 10px;
 }
