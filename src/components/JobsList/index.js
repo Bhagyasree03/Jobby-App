@@ -2,7 +2,7 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {GoLocation} from 'react-icons/go'
 import {BsBriefcase} from 'react-icons/bs'
-import {AiFillStar} from 'react-icons/ai'
+import {AiFillStar, AiOutlineSearch} from 'react-icons/ai'
 import Loader from 'react-loader-spinner'
 import './index.css'
 
@@ -17,6 +17,7 @@ class JobsList extends Component {
   state = {
     apiStatus: apiStatusConstants.initial,
     jobs: [],
+    searchInput: '',
   }
 
   componentDidMount() {
@@ -128,7 +129,7 @@ class JobsList extends Component {
     </div>
   )
 
-  render() {
+  renderJobsList = () => {
     const {apiStatus} = this.state
     switch (apiStatus) {
       case apiStatusConstants.success:
@@ -140,6 +141,30 @@ class JobsList extends Component {
       default:
         return null
     }
+  }
+
+  onChangeSearchInput = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
+  render() {
+    const {searchInput} = this.state
+    return (
+      <div className="search-jobs-container">
+        <div className="input-search-container">
+          <input
+            value={searchInput}
+            onChange={this.onChangeSearchInput}
+            className="search-text"
+            placeholder="search"
+            type="search"
+          />
+          <AiOutlineSearch className="search-icon" />
+        </div>
+
+        {this.renderJobsList()}
+      </div>
+    )
   }
 }
 export default JobsList
