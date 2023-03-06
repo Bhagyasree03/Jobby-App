@@ -26,7 +26,8 @@ class JobsList extends Component {
 
   getJobsList = async () => {
     this.setState({apiStatus: apiStatusConstants.inProgress})
-    const url = 'https://apis.ccbp.in/jobs'
+    const {searchInput} = this.state
+    const url = `https://apis.ccbp.in/jobs?search=${searchInput}`
     const jwtToken = Cookies.get('token')
     const options = {
       headers: {
@@ -49,7 +50,7 @@ class JobsList extends Component {
         rating: eachJob.rating,
         title: eachJob.title,
       }))
-      console.log(updatedData)
+      //   console.log(updatedData)
       this.setState({apiStatus: apiStatusConstants.success, jobs: updatedData})
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
@@ -147,6 +148,14 @@ class JobsList extends Component {
     this.setState({searchInput: event.target.value})
   }
 
+  onClickSearchIcon = () => {
+    this.getJobsList()
+  }
+
+  onClickEnter = () => {
+    this.getJobsList()
+  }
+
   render() {
     const {searchInput} = this.state
     return (
@@ -158,8 +167,12 @@ class JobsList extends Component {
             className="search-text"
             placeholder="search"
             type="search"
+            onKeyDown={this.onClickEnter}
           />
-          <AiOutlineSearch className="search-icon" />
+          <AiOutlineSearch
+            className="search-icon"
+            onClick={this.onClickSearchIcon}
+          />
         </div>
 
         {this.renderJobsList()}

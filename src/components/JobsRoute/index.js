@@ -43,7 +43,36 @@ const salaryRangesList = [
 ]
 
 class JobsRoute extends Component {
+  state = {
+    employmentType: [],
+    salaryRange: '',
+  }
+
+  onClickEmploymentId = event => {
+    const {employmentType} = this.state
+    const employmentId = event.target.value
+
+    // console.log(employmentId)
+
+    if (!employmentType.includes(employmentId)) {
+      this.setState(prevState => ({
+        employmentType: [...prevState.employmentType, employmentId],
+      }))
+    } else {
+      const filteredEmploymentTypes = employmentType.filter(
+        each => each !== employmentId,
+      )
+      this.setState({employmentType: filteredEmploymentTypes})
+    }
+  }
+
+  onClickSalary = event => {
+    // this.setState({salaryRange: event.target.value})
+    selectEmploymentType(event.target.value)
+  }
+
   render() {
+    const {employmentType, salaryRange} = this.state
     return (
       <>
         <Header />
@@ -56,7 +85,11 @@ class JobsRoute extends Component {
               <h1 className="side-text">Type of Employment</h1>
               <ul className="side-subtext">
                 {employmentTypesList.map(each => (
-                  <li className="list-text" key={each.employmentTypeId}>
+                  <li
+                    className="list-text"
+                    onClick={this.onClickEmploymentId}
+                    key={each.employmentTypeId}
+                  >
                     <input
                       type="checkbox"
                       id={each.employmentTypeId}
@@ -77,7 +110,11 @@ class JobsRoute extends Component {
               <h1 className="side-text">Salary Range</h1>
               <ul className="side-subtext">
                 {salaryRangesList.map(each => (
-                  <li className="list-text" key={each.salaryRangeId}>
+                  <li
+                    className="list-text"
+                    onClick={this.onClickSalary}
+                    key={each.salaryRangeId}
+                  >
                     <input
                       type="radio"
                       id={each.salaryRangeId}
@@ -92,7 +129,10 @@ class JobsRoute extends Component {
               </ul>
             </div>
           </div>
-          <JobsList />
+          <JobsList
+            employmentTypeArray={employmentType}
+            salaryRange={salaryRange}
+          />
         </div>
       </>
     )
