@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {GoLocation} from 'react-icons/go'
@@ -18,16 +19,32 @@ class JobsList extends Component {
     apiStatus: apiStatusConstants.initial,
     jobs: [],
     searchInput: '',
+    salary: '',
+    empType: [],
   }
 
   componentDidMount() {
     this.getJobsList()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const {salaryRange, employmentTypeArray} = this.props
+    if (
+      prevState.salary !== salaryRange ||
+      prevState.empType !== employmentTypeArray
+    ) {
+      this.getJobsList()
+    }
+  }
+
   getJobsList = async () => {
     this.setState({apiStatus: apiStatusConstants.inProgress})
-    const {searchInput} = this.state
-    const url = `https://apis.ccbp.in/jobs?search=${searchInput}`
+    const {searchInput, salary, empType} = this.state
+    const empTypeString = empType.join(',')
+    console.log(empTypeString, salary)
+
+    // https://apis.ccbp.in/jobs?employment_type=FULLTIME,PARTTIME&minimum_package=1000000&search=
+    const url = `https://apis.ccbp.in/jobs?search=${searchInput}&employment_type=${empTypeString}&minimum_package=${salary}`
     const jwtToken = Cookies.get('token')
     const options = {
       headers: {
@@ -55,6 +72,22 @@ class JobsList extends Component {
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
     }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      prevState.salary !== nextProps.salaryRange ||
+      prevState.empType !== nextProps.employmentTypeArray
+    ) {
+      return {
+        salary: nextProps.salaryRange,
+        empType: nextProps.employmentTypeArray,
+      }
+    }
+    return null
+
+    // console.log(nextProps)
+    // this.getData(salary, empType)
   }
 
   renderSuccess = () => {
@@ -158,6 +191,7 @@ class JobsList extends Component {
 
   render() {
     const {searchInput} = this.state
+
     return (
       <div className="search-jobs-container">
         <div className="input-search-container">
@@ -180,4 +214,5 @@ class JobsList extends Component {
     )
   }
 }
+
 export default JobsList

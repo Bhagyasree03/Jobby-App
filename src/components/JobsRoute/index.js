@@ -67,8 +67,8 @@ class JobsRoute extends Component {
   }
 
   onClickSalary = event => {
-    // this.setState({salaryRange: event.target.value})
-    selectEmploymentType(event.target.value)
+    this.setState({salaryRange: event.target.value})
+    // selectEmploymentType(event.target.value)
   }
 
   render() {
