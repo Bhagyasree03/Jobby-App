@@ -49,7 +49,7 @@ class Profile extends Component {
 
   renderSuccess = () => {
     const {name, image, bio} = this.state
-    console.log(name, bio, image)
+    // console.log(name, bio, image)
     return (
       <div className="profile-card">
         <img className="profile-image" src={image} alt="profile" />

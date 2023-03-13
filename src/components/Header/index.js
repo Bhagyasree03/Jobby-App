@@ -1,11 +1,12 @@
-import {Redirect, Link} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import './index.css'
 
-const Header = () => {
+const Header = props => {
   const logOut = () => {
+    const {history} = props
     Cookies.remove('token')
-    return <Redirect to="/login" />
+    history.replace('/login')
   }
   return (
     <nav className="header-container">
@@ -29,4 +30,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default withRouter(Header)

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import {Link} from 'react-router-dom'
 import {GoLocation} from 'react-icons/go'
 import {BsBriefcase} from 'react-icons/bs'
 import {AiFillStar, AiOutlineSearch} from 'react-icons/ai'
@@ -41,10 +42,9 @@ class JobsList extends Component {
     this.setState({apiStatus: apiStatusConstants.inProgress})
     const {searchInput, salary, empType} = this.state
     const empTypeString = empType.join(',')
-    console.log(empTypeString, salary)
-
+    // console.log(empTypeString, salary)
     // https://apis.ccbp.in/jobs?employment_type=FULLTIME,PARTTIME&minimum_package=1000000&search=
-    const url = `https://apis.ccbp.in/jobs?search=${searchInput}&employment_type=${empTypeString}&minimum_package=${salary}`
+    const url = `https://apis.ccbp.in/jobs?employment_type=${empTypeString}&minimum_package=${salary}&search=${searchInput}`
     const jwtToken = Cookies.get('token')
     const options = {
       headers: {
@@ -54,6 +54,7 @@ class JobsList extends Component {
     }
     const response = await fetch(url, options)
     // console.log(response)
+    // console.log(url)
     if (response.ok) {
       const data = await response.json()
       //   console.log(data)
@@ -74,59 +75,73 @@ class JobsList extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      prevState.salary !== nextProps.salaryRange ||
-      prevState.empType !== nextProps.employmentTypeArray
-    ) {
-      return {
-        salary: nextProps.salaryRange,
-        empType: nextProps.employmentTypeArray,
-      }
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      salary: nextProps.salaryRange,
+      empType: nextProps.employmentTypeArray,
     }
-    return null
-
-    // console.log(nextProps)
-    // this.getData(salary, empType)
   }
+
+  renderNoJobsView = () => (
+    <div className="no-jobs-container">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+        alt="no jobs"
+        className="no-jobs-found-image"
+      />
+      <div className="heading-part">
+        <h1 className="no-jobs-heading">No Jobs Found</h1>
+        <p className="no-jobs-paragraph">
+          We could not find any jobs. Try other filters.
+        </p>
+      </div>
+    </div>
+  )
 
   renderSuccess = () => {
     const {jobs} = this.state
+    if (jobs.length === 0) {
+      return this.renderNoJobsView()
+    }
     return (
       <ul className="jobs-list-container">
         {jobs.map(each => (
-          <li className="job-list-items" key={each.id}>
-            <div className="job-card-container">
-              <div className="jobs-logo-container">
-                <img
-                  alt="company-logo"
-                  className="company-logo"
-                  src={each.companyLogo}
-                />
-                <div className="title-container">
-                  <h1 className="title">{each.title}</h1>
-                  <div className="rating-container">
-                    <AiFillStar className="star-color" />
-                    <p className="rating">{each.rating}</p>
+          <Link className="job-link" to={`/jobs/${each.id}`} key={each.id}>
+            <li className="job-list-items">
+              <div className="job-card-container">
+                <div className="jobs-logo-container">
+                  <img
+                    alt="company-logo"
+                    className="company-logo"
+                    src={each.companyLogo}
+                  />
+                  <div className="title-container">
+                    <h1 className="title">{each.title}</h1>
+                    <div className="rating-container">
+                      <AiFillStar className="star-color" />
+                      <p className="rating">{each.rating}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="location-container">
-                <div className="part-container">
-                  <GoLocation className="icon-color" />
-                  <p className="location-text">{each.location}</p>
-                  <BsBriefcase className="icon-color" />
-                  <p className="employment-type-text">{each.employmentType}</p>
+                <div className="location-container">
+                  <div className="part-container">
+                    <GoLocation className="icon-color" />
+                    <p className="location-text">{each.location}</p>
+                    <BsBriefcase className="icon-color" />
+                    <p className="employment-type-text">
+                      {each.employmentType}
+                    </p>
+                  </div>
+                  <p className="package-text">{each.package}</p>
                 </div>
-                <p className="package-text">{each.package}</p>
+                <div>
+                  <hr className="line" />
+                  <p className="description-text">Description</p>
+                </div>
+                <p className="jobDescription">{each.jobDescription}</p>
               </div>
-              <div>
-                <hr className="line" />
-                <p className="description-text">Description</p>
-              </div>
-              <p className="jobDescription">{each.jobDescription}</p>
-            </div>
-          </li>
+            </li>
+          </Link>
         ))}
       </ul>
     )
@@ -185,8 +200,10 @@ class JobsList extends Component {
     this.getJobsList()
   }
 
-  onClickEnter = () => {
-    this.getJobsList()
+  onClickEnter = event => {
+    if (event.key === 'Enter') {
+      this.getJobsList()
+    }
   }
 
   render() {
