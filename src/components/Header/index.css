@@ -1,6 +1,6 @@
 .header-container {
   background-color: #272727;
-  height: 15vh;
+  /* height: 15vh; */
   display: flex;
   flex-direction: row;
   padding: 20px 40px;
@@ -33,4 +33,43 @@
 }
 .header-link {
   text-decoration: none;
+}
+
+.sm-header-list {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .header-container {
+    padding: 20px;
+  }
+  .header-list {
+    display: none;
+    padding: 0px;
+    margin: 0px;
+  }
+  .header-btn {
+    display: none;
+  }
+  .sm-header-list {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 30%;
+    padding: 0px;
+    margin: 0px;
+  }
+  .header-logo {
+    height: 40px;
+    width: 80px;
+  }
+  .sm-icon {
+    color: white;
+    font-size: 26px;
+  }
+  .sm-btn {
+    background-color: transparent;
+    padding: 0px;
+    border: none;
+  }
 }

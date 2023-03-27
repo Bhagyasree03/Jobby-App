@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 import {Link} from 'react-router-dom'
 import {GoLocation} from 'react-icons/go'
 import {BsBriefcase} from 'react-icons/bs'
-import {AiFillStar, AiOutlineSearch} from 'react-icons/ai'
+import {AiFillStar} from 'react-icons/ai'
 import Loader from 'react-loader-spinner'
 import './index.css'
 
@@ -29,10 +29,11 @@ class JobsList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {salaryRange, employmentTypeArray} = this.props
+    const {salaryRange, employmentTypeArray, searchText} = this.props
     if (
       prevState.salary !== salaryRange ||
-      prevState.empType !== employmentTypeArray
+      prevState.empType !== employmentTypeArray ||
+      prevState.searchInput !== searchText
     ) {
       this.getJobsList()
     }
@@ -79,6 +80,7 @@ class JobsList extends Component {
     return {
       salary: nextProps.salaryRange,
       empType: nextProps.employmentTypeArray,
+      searchInput: nextProps.searchText,
     }
   }
 
@@ -192,43 +194,10 @@ class JobsList extends Component {
     }
   }
 
-  onChangeSearchInput = event => {
-    this.setState({searchInput: event.target.value})
-  }
-
-  onClickSearchIcon = () => {
-    this.getJobsList()
-  }
-
-  onClickEnter = event => {
-    if (event.key === 'Enter') {
-      this.getJobsList()
-    }
-  }
-
   render() {
     const {searchInput} = this.state
 
-    return (
-      <div className="search-jobs-container">
-        <div className="input-search-container">
-          <input
-            value={searchInput}
-            onChange={this.onChangeSearchInput}
-            className="search-text"
-            placeholder="search"
-            type="search"
-            onKeyDown={this.onClickEnter}
-          />
-          <AiOutlineSearch
-            className="search-icon"
-            onClick={this.onClickSearchIcon}
-          />
-        </div>
-
-        {this.renderJobsList()}
-      </div>
-    )
+    return this.renderJobsList()
   }
 }
 

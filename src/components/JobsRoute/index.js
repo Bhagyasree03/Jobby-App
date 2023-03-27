@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {AiOutlineSearch} from 'react-icons/ai'
 import Header from '../Header'
 import Profile from '../Profile'
 import JobsList from '../JobsList'
@@ -46,6 +47,8 @@ class JobsRoute extends Component {
   state = {
     employmentType: [],
     salaryRange: '',
+    searchText: '',
+    searchInput: '',
   }
 
   onClickEmploymentId = event => {
@@ -71,12 +74,44 @@ class JobsRoute extends Component {
     // selectEmploymentType(event.target.value)
   }
 
+  onChangeSearchInput = event => {
+    this.setState({searchText: event.target.value})
+  }
+
+  onClickSearchIcon = () => {
+    const {searchText} = this.state
+    this.setState({searchInput: searchText})
+  }
+
+  onClickEnter = event => {
+    if (event.key === 'Enter') {
+      const {searchText} = this.state
+      this.setState({searchInput: searchText})
+    }
+  }
+
   render() {
-    const {employmentType, salaryRange} = this.state
+    const {employmentType, salaryRange, searchText, searchInput} = this.state
     return (
       <>
         <Header />
         <div className="jobs-container">
+          <div className="sm-search-jobs-container">
+            <div className="input-search-container">
+              <input
+                value={searchText}
+                onChange={this.onChangeSearchInput}
+                className="search-text"
+                placeholder="search"
+                type="search"
+                onKeyDown={this.onClickEnter}
+              />
+              <AiOutlineSearch
+                className="search-icon"
+                onClick={this.onClickSearchIcon}
+              />
+            </div>
+          </div>
           <div className="side-container">
             <Profile />
 
@@ -129,10 +164,29 @@ class JobsRoute extends Component {
               </ul>
             </div>
           </div>
-          <JobsList
-            employmentTypeArray={employmentType}
-            salaryRange={salaryRange}
-          />
+          <div className="search-jobs-main-container">
+            <div className="search-jobs-container">
+              <div className="input-search-container">
+                <input
+                  value={searchText}
+                  onChange={this.onChangeSearchInput}
+                  className="search-text"
+                  placeholder="search"
+                  type="search"
+                  onKeyDown={this.onClickEnter}
+                />
+                <AiOutlineSearch
+                  className="search-icon"
+                  onClick={this.onClickSearchIcon}
+                />
+              </div>
+            </div>
+            <JobsList
+              employmentTypeArray={employmentType}
+              salaryRange={salaryRange}
+              searchText={searchInput}
+            />
+          </div>
         </div>
       </>
     )
